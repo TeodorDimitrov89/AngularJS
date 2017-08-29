@@ -1,0 +1,29 @@
+{
+  "name": "pets-system",
+  "version": "0.0.1",
+  "description": "Pets system",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "pets",
+    "system"
+  ],
+  "author": "Ivaylo Kenov",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "1.17.2",
+    "cookie-parser": "1.4.3",
+    "cors": "2.8.3",
+    "express": "4.15.3",
+    "mongoose": "4.10.5",
+    "morgan": "^1.6.1",
+    "express-session": "1.15.3",
+    "swig": "^1.4.2",
+    "jsonwebtoken": "7.4.1",
+    "passport": "0.3.2",
+    "passport-local": "1.0.0",
+    "validator": "7.2.0"
+  }
+}
