@@ -1,6 +1,8 @@
 (function () {
   'use strict'
-  angular.module('socialNetwork.home', ['ngRoute'])
+  angular.module('socialNetwork.home', [
+    'socialNetwork.users.auth'
+  ])
     .config(['$routeProvider', function ($routeProvider) {
       $routeProvider.when('/', {
         templateUrl: 'home/home.html',
@@ -9,12 +11,17 @@
       })
     }])
     .controller('HomeController', [
-      '$scope', function HomeController ($scope) {
-        $scope.login = function (user) {
-          console.log(user)
+      '$scope',
+      'auth',
+      function HomeController ($scope, auth) {
+        $scope.login = (user) => {
+          auth.loginUser(user)
         }
-        $scope.register = function (user) {
-          console.log(user)
+        $scope.register = (user) => {
+          auth.registerUser(user)
+            .then(registeredUser => {
+              console.log(registeredUser)
+            })
         }
       }
     ])

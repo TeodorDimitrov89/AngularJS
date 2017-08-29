@@ -16,4 +16,4 @@ angular.module('socialNetwork', [
       cfpLoadingBarProvider.spinnerTemplate = '<div><span class="fa fa-spinner">Loading...</div>'
       $routeProvider.otherwise({ redirectTo: '/' })
     }])
-  // .const('BASE_URL', 'http://softuni-social-network.azurewebsites.net/api')
+  .constant('BASE_URL', 'http://softuni-social-network.azurewebsites.net/api/')
