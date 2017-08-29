@@ -1,4 +1,5 @@
-const validator = require('validator')
+// const validator = require('validator')
+const validationForms = require('./validationForms')
 const passport = require('passport')
 const localSignupStrategy = require('../passport/local-signup')
 const localLoginStrategy = require('../passport/local-login')
@@ -9,7 +10,7 @@ module.exports = {
   signupStrategy: localSignupStrategy,
 
   signup: (req, res, next) => {
-    const validationResult = validateSignupForm(req.body)
+    const validationResult = validationForms.validateSignupForm(req.body)
     if (!validationResult.success) {
       return res.status(200).json({
         success: false,
@@ -36,14 +37,14 @@ module.exports = {
   loginStrategy: localLoginStrategy,
 
   login: (req, res, next) => {
-    // const validationResult = validateLoginForm(req.body)
-    // if (!validationResult.success) {
-    //   return res.status(200).json({
-    //     success: false,
-    //     message: validationResult.message,
-    //     errors: validationResult.errors
-    //   })
-    // }
+    const validationResult = validationForms.validateLoginForm(req.body)
+    if (!validationResult.success) {
+      return res.status(200).json({
+        success: false,
+        message: validationResult.message,
+        errors: validationResult.errors
+      })
+    }
 
     return passport.authenticate('local-login', (err, token, userData) => {
       if (err) {
@@ -126,7 +127,7 @@ module.exports = {
       }))
   },
   editUser: (req, res, next) => {
-    const validationResult = validateSignupForm(req.body)
+    const validationResult = validationForms.validateSignupForm(req.body)
     if (!validationResult.success) {
       return res.status(200).json({
         success: false,
@@ -165,61 +166,70 @@ module.exports = {
   }
 }
 
-function validateSignupForm(payload) {
-  const errors = {}
-  let isFormValid = true
-  let message = ''
-
-  if (!payload || typeof payload.email !== 'string' || !validator.isEmail(payload.email)) {
-    isFormValid = false
-    errors.email = 'Please provide a correct email address.'
-  }
-
-  if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 4) {
-    isFormValid = false
-    errors.password = 'Password must have at least 4 characters.'
-  }
-
-  if (!payload || typeof payload.firstName !== 'string' || payload.firstName.trim().length === 0) {
-    isFormValid = false
-    errors.firstName = 'Please provide your first name.'
-  }
-
-  if (!payload || typeof payload.lastName !== 'string' || payload.lastName.trim().length === 0) {
-    isFormValid = false
-    errors.lastName = 'Please provide your last name'
-  }
-
-  if (!isFormValid) {
-    message = 'Check the form for errors.'
-  }
-
-  return {
-    success: isFormValid,
-    message,
-    errors
-  }
-}
-
-// function validateLoginForm(payload) {
+// function validateSignupForm(payload) {
 //   const errors = {}
 //   let isFormValid = true
 //   let message = ''
 
-//   if (!payload || typeof payload.email !== 'string' || payload.email.trim().length === 0) {
+//   if (!payload || typeof payload.email !== 'string' || !validator.isEmail(payload.email)) {
 //     isFormValid = false
-//     errors.email = 'Please provide your email address.'
+//     errors.email = 'Please provide a correct email address.'
 //   }
 
-//   if (!payload || typeof payload.password !== 'string' || payload.password.trim().length === 0) {
+//   if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 4) {
 //     isFormValid = false
-//     errors.password = 'Please provide your password.'
+//     errors.password = 'Password must have at least 4 characters.'
+//   }
+
+//   if (!payload || typeof payload.firstName !== 'string' || payload.firstName.trim().length === 0) {
+//     isFormValid = false
+//     errors.firstName = 'Please provide your first name.'
+//   }
+
+//   if (!payload || typeof payload.lastName !== 'string' || payload.lastName.trim().length === 0) {
+//     isFormValid = false
+//     errors.lastName = 'Please provide your last name'
 //   }
 
 //   if (!isFormValid) {
 //     message = 'Check the form for errors.'
 //   }
 
+//   return {
+//     success: isFormValid,
+//     message,
+//     errors
+//   }
+// }
+
+// function validateLoginForm(payload) {
+//   const errors = {}
+//   let isFormValid = true
+//   let message = ''
+
+//   if (!payload || typeof payload.username !== 'string' || payload.username.trim().length === 0) {
+//     isFormValid = false
+//     errors.username = 'Please provide your username'
+//   }
+
+//   if (!payload || typeof payload.password !== 'string' || payload.password.trim().length === 0) {
+//     isFormValid = false
+//     errors.password = 'Please provide your password'
+//   }
+
+//   if (!payload || typeof payload.confirmPassword !== 'string' || payload.confirmPassword.trim().length === 0) {
+//     isFormValid = false
+//     errors.password = 'Please provide your confirm password'
+//   }
+
+//   if (payload.password.trim() !== payload.confirmPassword.trim()) {
+//     isFormValid = false
+//     errors.email = 'Password and Confirm Password do not match'
+//   }
+
+//   if (!isFormValid) {
+//     message = 'Check the form for errors'
+//   }
 //   return {
 //     success: isFormValid,
 //     message,

@@ -11,11 +11,10 @@ module.exports = new PassportLocalStrategy({
     username: username.trim(),
     password: password.trim(),
     name: req.body.name.trim(),
-    email: req.body.email.trim(),
-    gender: req.body.gender.trim()
+    email: req.body.email.trim()
   }
   User
-    .findOne({ username: reqUser.username })
+    .findOne({ $or: [{ username: reqUser.username }, { email: reqUser.email }] })
     .then(userFound => {
       if (!userFound) {
         let salt = encryption.generateSalt()
@@ -34,7 +33,7 @@ module.exports = new PassportLocalStrategy({
             console.log(err)
           })
       } else {
-        return done('Username already exists!')
+        return done('Username or E-mail already exists!')
       }
     })
     .catch(err => {
