@@ -1,8 +1,9 @@
 const usersController = require('./users-controller')
-// const gadgetsController = require('./gadgets-controller')
+const authController = require('./auth-controller')
 const commentsController = require('./comments-controller')
+
 module.exports = {
   users: usersController,
-  // gadgets: gadgetsController,
+  auth: authController,
   comments: commentsController
 }

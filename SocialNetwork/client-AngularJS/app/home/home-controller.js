@@ -1,8 +1,6 @@
 (function () {
   'use strict'
-  angular.module('socialNetwork.home', [
-    'socialNetwork.users.auth'
-  ])
+  angular.module('socialNetwork.home.homeController', ['socialNetwork.users.service'])
     .config(['$routeProvider', function ($routeProvider) {
       $routeProvider.when('/', {
         templateUrl: 'home/home.html',
@@ -12,15 +10,26 @@
     }])
     .controller('HomeController', [
       '$scope',
-      'auth',
-      function HomeController ($scope, auth) {
+      '$location',
+      'usersService',
+      'authService',
+      function HomeController ($scope, $location, usersService, authService) {
         $scope.login = (user) => {
-          auth.loginUser(user)
+          usersService.loginUser(user)
+            .then(response => {
+              if (response.success) {
+                const currentUser = response.user
+                const token = response.token
+                authService.saveUser(currentUser)
+                authService.authenticateUser(token)
+                $location.path('/newsFeed')
+              }
+            })
         }
         $scope.register = (user) => {
-          auth.registerUser(user)
-            .then(registeredUser => {
-              console.log(registeredUser)
+          usersService.registerUser(user)
+            .then(response => {
+              console.log(response)
             })
         }
       }

@@ -4,16 +4,20 @@
 angular.module('socialNetwork', [
   'ngRoute',
   'angular-loading-bar',
-  'socialNetwork.home'
+  'socialNetwork.common.mainController',
+  'socialNetwork.common.httpService',
+  'socialNetwork.common.authService',
+  'socialNetwork.home.homeController',
+  'socialNetwork.newsFeed.newsFeedController'
 ])
   .config(['$locationProvider',
     '$routeProvider',
     'cfpLoadingBarProvider',
     function ($locationProvider, $routeProvider, cfpLoadingBarProvider) {
-      // $locationProvider.hashPrefix('!')
+      $locationProvider.html5Mode(true)
       cfpLoadingBarProvider.includeSpinner = true
       cfpLoadingBarProvider.includeBar = true
       cfpLoadingBarProvider.spinnerTemplate = '<div><span class="fa fa-spinner">Loading...</div>'
       $routeProvider.otherwise({ redirectTo: '/' })
     }])
-  .constant('BASE_URL', 'http://softuni-social-network.azurewebsites.net/api/')
+  .constant('BASE_URL', 'http://localhost:5000')

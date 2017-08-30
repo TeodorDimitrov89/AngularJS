@@ -14,8 +14,8 @@
   <div class="col-md-4 col-md-offset-2 border">
     <form name="registerUserForm">
       <label for="reg-username">Username</label>
-      <input type="text" required="required" ng-model="registerUser.username" id="reg-username" class="form-control" />
-
+      <input type="text" required="required" minlength="6" ng-model="registerUser.username" id="reg-username" class="form-control"
+      />
       <label for="reg-password">Password</label>
       <input type="password" required="required" minlength="6" maxlength="20" ng-model="registerUser.password" id="reg-password"
         class="form-control" />
@@ -23,12 +23,12 @@
       <label for="reg-confirmPassword">Confirm Password</label>
       <input type="password" required="required" minlength="6" maxlength="20" ng-model="registerUser.confirmPassword" id="reg-confirmPassword"
         class="form-control" />
+      <label for="reg-email">Email</label>
+      <input type="email" required="required" ng-model="registerUser.email" id="reg-email" class="form-control" />
 
       <label for="reg-name">Name</label>
       <input type="text" required="required" ng-model="registerUser.name" id="reg-name" class="form-control" />
 
-      <label for="reg-email">Email</label>
-      <input type="email" required="required" ng-model="registerUser.email" id="reg-email" class="form-control" />
 
       <label for="reg-gender">Gender</label>
       <label class="font-weight-normal">

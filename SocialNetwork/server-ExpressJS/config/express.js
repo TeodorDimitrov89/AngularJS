@@ -6,10 +6,10 @@ const passport = require('passport')
 const path = require('path')
 const cors = require('cors')
 const controllers = require('../controllers')
-const localSignupStrategy = controllers.users.signupStrategy
-const localLoginStrategy = controllers.users.loginStrategy
+const localSignupStrategy = controllers.auth.signupStrategy
+const localLoginStrategy = controllers.auth.loginStrategy
 const authRoutes = require('../routes/auth')
-// const gadgetsRoutes = require('../routes/gadgets')
+const usersRoutes = require('../routes/users')
 
 module.exports = (app, settings) => {
   app.use(bodyParser.urlencoded({ extended: false }))
@@ -22,7 +22,8 @@ module.exports = (app, settings) => {
 
   // routes
   app.use('/auth', authRoutes)
-  // app.use('/gadgets', gadgetsRoutes)
+  app.use('/users', usersRoutes)
+
   app.use(cookieParser())
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(session({
@@ -32,6 +33,13 @@ module.exports = (app, settings) => {
   }))
   app.use(passport.initialize())
   app.use(passport.session())
+
+  app.use((req, res, next) => {
+    if (req.user) {
+      res.locals.currentUser = req.user
+    }
+    next()
+  })
 
   app.use((req, res, next) => {
     // Configure public folder
