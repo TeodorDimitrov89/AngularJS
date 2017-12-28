@@ -5,6 +5,7 @@ const authCheck = require('../middleware/auth-check')
 const router = new express.Router()
 
 router.get('/profile', controllers.users.userData)
+router.get('/find', controllers.users.findFriends)
 
 // router.post('/edit', authCheck.isAuthenticated, authCheck.isAdmin(), controllers.users.editUser)
 

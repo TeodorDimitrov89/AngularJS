@@ -13,7 +13,6 @@ module.exports = {
         errors: validationResult.errors
       })
     }
-
     let id = req.body._id
     User
       .findByIdAndUpdate(id, {
@@ -41,5 +40,21 @@ module.exports = {
         success: false,
         errors: err
       }))
+  },
+  findFriends: (req, res, next) => {
+    const search = req.query.search
+    User.find({ name: search })
+      .then(users => {
+        if (users.length > 0) {
+          return res.status(200).json({
+            success: true,
+            users
+          })
+        }
+        return res.status(200).json({
+          success: false,
+          message: 'No user found'
+        })
+      })
   }
 }

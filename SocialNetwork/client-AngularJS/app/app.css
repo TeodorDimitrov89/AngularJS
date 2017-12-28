@@ -25,3 +25,8 @@ body {
   content: "|";
   padding-right: 0.3em;
 }
+.search {
+  margin-top: 10px;
+  width: 20%;
+  display: inline-block
+}

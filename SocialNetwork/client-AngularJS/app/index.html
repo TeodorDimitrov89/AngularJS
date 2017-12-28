@@ -6,12 +6,13 @@
   <title>Social Network</title>
   <meta name="description" content="Social Network">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <base href="/" />
+  <!-- <base href="/" /> -->
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
   <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css">
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/toastr/toastr.css">
   <link rel="stylesheet" href="app.css">
   <link rel="stylesheet" href="home/home.css">
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
@@ -21,7 +22,7 @@
   <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
-        <a href="/" class="navbar-brand">Social Network</a>
+        <a href="#/" class="navbar-brand">Social Network</a>
         <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -29,43 +30,70 @@
         </button>
       </div>
       <div class="navbar-collapse collapse" id="navbar-main">
-        <ul ng-if="isAuthenticated" class="nav navbar-nav">
+        <ul ng-if="!isAuthenticated" class="nav navbar-nav">
           <li>
-            <a href="/newsFeed">News Feed</a>
+            <a href="#/login">Login</a>
           </li>
           <li>
-            <a href="/friendRequests">Friends Request</a>
-          </li>
-          <li>
-            <a href="/settings">Settings</a>
-          </li>
-          <li>
-            <a href="/changePassword">Change Password</a>
-          </li>
-          <li>
-            <a href="/logout">Logout</a>
+            <a href="#/register">Register</a>
           </li>
         </ul>
+        <ul ng-if="isAuthenticated" class="nav navbar-nav">
+          <li>
+            <a href="#/newsFeed">News Feed</a>
+          </li>
+          <li>
+            <a href="#/friendsRequests">Friends Request</a>
+          </li>
+          <li>
+            <a href="#/myFriends">My Friends</a>
+          </li>
+          <li>
+            <a href="#/settings">Settings</a>
+          </li>
+          <li>
+            <a href="#/changePassword">Change Password</a>
+          </li>
+          <li>
+            <a href="#/logout" ng-click="logout()">Logout</a>
+          </li>
+        </ul>
+        <form name="searchUserForm" class="search">
+          <input class="form-control" type="search" name="Search" ng-model="searchUser.username" placeholder="Search">
+        </form>
+        <button class="btn btn-primary" ng-click="search(searchUser)">Search</button>
       </div>
     </div>
   </div>
   <div class="container">
     <div ng-view></div>
   </div>
+  <div footer-directive></div>
+
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
   <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/toastr/toastr.js"></script>
+
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
   <script src="app.js"></script>
 
   <script src="common/main-controller.js"></script>
+  <script src="common/footer-directive.js"></script>
   <script src="common/http-service.js"></script>
   <script src="common/auth-service.js"></script>
 
   <script src="users/users-service.js"></script>
+  <script src="users/login/login-controller.js"></script>
+  <script src="users/register/register-controller.js"></script>
+  <script src="users/all-users-controller.js"></script>
+
   <script src="home/home-controller.js"></script>
+
   <script src="news-feed/news-feed-controller.js"></script>
+  <script src="news-feed/news-feed-service.js"></script>
 </body>
 
 </html>
